@@ -1,0 +1,7 @@
+make a 4*4 grid in courses
+create a 4*4 2d list, fill it up with 0s
+spawn two tiles at random locations, feature :chance to a "4 tile is 10%"
+handle key inputs - Dóri
+compare numbers, add them, put a 0 in it's place Gábor
+move numbers (check, for 0s)
+and stuff
