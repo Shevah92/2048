@@ -1,7 +1,0 @@
-creating a 4x4 array:
-
-z= 4
-game_area = [[0 for x in range(z)} for y in range (z)]
-
-papírrol cuccok, validálni a movementet, kell-e a while a mozgatashoz? (Dóriéban)
-
