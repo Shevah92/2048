@@ -6,156 +6,156 @@ from curses import KEY_RIGHT, KEY_LEFT, KEY_UP, KEY_DOWN
 
 
 def add_up(): #addition after up arrow key
-    global game_area
+    global list_of_numbers
     global valid_move
     global score
     for j in range(4): #for doing the addition in every column
         for i in range (3): #compares neighbor numbers with the if
-            if game_area[i][j] == game_area[i+1][j] and game_area[i][j]!=0: #if true runs the addition sequence
-                game_area[i][j]=game_area[i][j]+game_area[i+1][j]
-                score += game_area[i][j] #adds the created number to the score
-                game_area[i+1][j]=0
+            if list_of_numbers[i][j] == list_of_numbers[i+1][j] and list_of_numbers[i][j]!=0: #if true runs the addition sequence
+                list_of_numbers[i][j]=list_of_numbers[i][j]+list_of_numbers[i+1][j]
+                score += list_of_numbers[i][j] #adds the created number to the score
+                list_of_numbers[i+1][j]=0
                 valid_move[1]=1 #indicates that a valid move was made
 
 def add_down(): #addition after down key
-    global game_area
+    global list_of_numbers
     global valid_move
     global score
     for j in range(4): #for doing the addition in every column
         for i in range (3): #compares neighbor numbers
-            if game_area[3-i][j] == game_area[3-(i+1)][j] and game_area[3-i][j]!=0: #if true runs the addition sequence
-                game_area[3-i][j]=game_area[3-i][j]+game_area[3-(i+1)][j]
-                score += game_area[3-i][j] #adds the created number to the score
-                game_area[3-(i+1)][j]=0
+            if list_of_numbers[3-i][j] == list_of_numbers[3-(i+1)][j] and list_of_numbers[3-i][j]!=0: #if true runs the addition sequence
+                list_of_numbers[3-i][j]=list_of_numbers[3-i][j]+list_of_numbers[3-(i+1)][j]
+                score += list_of_numbers[3-i][j] #adds the created number to the score
+                list_of_numbers[3-(i+1)][j]=0
                 valid_move[2]=1 #indicates that a valid move was made
 
 
 def add_left(): # addition after left key
-    global game_area
+    global list_of_numbers
     global valid_move
     global score
     for i in range (4): #for doing the addition in every row
         for j in range (3): #compares neighbor numbers
-            if game_area[i][j] == game_area[i][j+1] and game_area[i][j]!=0: #if true runs the addition sequence
-                game_area[i][j]=game_area[i][j]+game_area[i][j+1]
-                score += game_area[i][j] #adds the created number to the score
-                game_area[i][j+1]=0
+            if list_of_numbers[i][j] == list_of_numbers[i][j+1] and list_of_numbers[i][j]!=0: #if true runs the addition sequence
+                list_of_numbers[i][j]=list_of_numbers[i][j]+list_of_numbers[i][j+1]
+                score += list_of_numbers[i][j] #adds the created number to the score
+                list_of_numbers[i][j+1]=0
                 valid_move[0]=1 #indicates that a valid move was made
 
 
 def add_right(): #addition after right key
-    global game_area
+    global list_of_numbers
     global valid_move
     global score
     for i in range (4): #for doing the addition in every row
         for j in range (3): #compares neighbor numbers
-            if game_area[i][3-j] == game_area[i][3-(j+1)] and game_area[i][3-j]!=0: #if true runs the addition sequence
-                game_area[i][3-j]=game_area[i][3-j]+game_area[i][3-(j+1)]
-                score += game_area[i][3-j] #adds the created number to the score
-                game_area[i][3-(j+1)]=0
+            if list_of_numbers[i][3-j] == list_of_numbers[i][3-(j+1)] and list_of_numbers[i][3-j]!=0: #if true runs the addition sequence
+                list_of_numbers[i][3-j]=list_of_numbers[i][3-j]+list_of_numbers[i][3-(j+1)]
+                score += list_of_numbers[i][3-j] #adds the created number to the score
+                list_of_numbers[i][3-(j+1)]=0
                 valid_move[3]=1 #indicates that a valid move was made
 
 
 def move_up(): #movement after up arrow key
-    global game_area
+    global list_of_numbers
     global valid_move
     i = 0
     for j in range (4): #for moving in every column
-        if game_area[i+1][j]!= 0 or game_area[i+2][j]!= 0 or game_area[i+3][j]!= 0: #checks if moving is necessary (no need to move zeros)
-            if game_area[i][j]== 0:
-                while game_area[i][j]==0: #needed to move the first non-zero number in the column to this position
-                    game_area[i][j] = game_area[i+1][j]
-                    game_area[i+1][j] = game_area[i+2][j]
-                    game_area[i+2][j] = game_area[i+3][j]
-                    game_area[i+3][j] = 0
+        if list_of_numbers[i+1][j]!= 0 or list_of_numbers[i+2][j]!= 0 or list_of_numbers[i+3][j]!= 0: #checks if moving is necessary (no need to move zeros)
+            if list_of_numbers[i][j]== 0:
+                while list_of_numbers[i][j]==0: #needed to move the first non-zero number in the column to this position
+                    list_of_numbers[i][j] = list_of_numbers[i+1][j]
+                    list_of_numbers[i+1][j] = list_of_numbers[i+2][j]
+                    list_of_numbers[i+2][j] = list_of_numbers[i+3][j]
+                    list_of_numbers[i+3][j] = 0
                 valid_move[1] = 1 #indicates that a valid move was made
-            if game_area[i+1][j]== 0 and (game_area[i+2][j]!= 0 or game_area[i+3][j]!= 0): #checks is moving is still necessary
-                while game_area[i+1][j]== 0: # moves the 2nd non-zero in the column to this position
-                    game_area[i+1][j] = game_area[i+2][j]
-                    game_area[i+2][j] = game_area[i+3][j]
-                    game_area[i+3][j] = 0
+            if list_of_numbers[i+1][j]== 0 and (list_of_numbers[i+2][j]!= 0 or list_of_numbers[i+3][j]!= 0): #checks is moving is still necessary
+                while list_of_numbers[i+1][j]== 0: # moves the 2nd non-zero in the column to this position
+                    list_of_numbers[i+1][j] = list_of_numbers[i+2][j]
+                    list_of_numbers[i+2][j] = list_of_numbers[i+3][j]
+                    list_of_numbers[i+3][j] = 0
                 valid_move[1] = 1 #indicates that a valid move was made
-            if game_area[i+2][j]== 0 and game_area[i+3][j]!=0: #moves the last non-zero to this position
-                game_area[i+2][j]= game_area[i+3][j]
-                game_area[i+3][j]= 0
+            if list_of_numbers[i+2][j]== 0 and list_of_numbers[i+3][j]!=0: #moves the last non-zero to this position
+                list_of_numbers[i+2][j]= list_of_numbers[i+3][j]
+                list_of_numbers[i+3][j]= 0
                 valid_move[1] = 1 #indicates that a valid move was made
 
 
 def move_down():#movement after down arrow key, find the rest of the explanation at def move_up function with the obvious differences
-    global game_area
+    global list_of_numbers
     global valid_move
     i = 3
     for j in range (4):
-        if game_area[i-1][j]!= 0 or game_area[i-2][j]!= 0 or game_area[i-3][j]!= 0:
-            if game_area[i][j]== 0:
-                while game_area[i][j]==0:
-                    game_area[i][j] = game_area[i-1][j]
-                    game_area[i-1][j] = game_area[i-2][j]
-                    game_area[i-2][j] = game_area[i-3][j]
-                    game_area[i-3][j] = 0
+        if list_of_numbers[i-1][j]!= 0 or list_of_numbers[i-2][j]!= 0 or list_of_numbers[i-3][j]!= 0:
+            if list_of_numbers[i][j]== 0:
+                while list_of_numbers[i][j]==0:
+                    list_of_numbers[i][j] = list_of_numbers[i-1][j]
+                    list_of_numbers[i-1][j] = list_of_numbers[i-2][j]
+                    list_of_numbers[i-2][j] = list_of_numbers[i-3][j]
+                    list_of_numbers[i-3][j] = 0
                 valid_move[2] = 1
-            if game_area[i-1][j]== 0 and (game_area[i-2][j]!= 0 or game_area[i-3][j]!= 0):
-                while game_area[i-1][j]== 0:
-                    game_area[i-1][j] = game_area[i-2][j]
-                    game_area[i-2][j] = game_area[i-3][j]
-                    game_area[i-3][j] = 0
+            if list_of_numbers[i-1][j]== 0 and (list_of_numbers[i-2][j]!= 0 or list_of_numbers[i-3][j]!= 0):
+                while list_of_numbers[i-1][j]== 0:
+                    list_of_numbers[i-1][j] = list_of_numbers[i-2][j]
+                    list_of_numbers[i-2][j] = list_of_numbers[i-3][j]
+                    list_of_numbers[i-3][j] = 0
                 valid_move[2] = 1
-            if game_area[i-2][j]== 0 and game_area[i-3][j]!=0:
-                game_area[i-2][j]= game_area[i-3][j]
-                game_area[i-3][j]= 0
+            if list_of_numbers[i-2][j]== 0 and list_of_numbers[i-3][j]!=0:
+                list_of_numbers[i-2][j]= list_of_numbers[i-3][j]
+                list_of_numbers[i-3][j]= 0
                 valid_move[2] = 1
 
 def move_left(): #movement after left arrow key, find the rest of the explanation at def move_up function with the obvious differences
-    global game_area
+    global list_of_numbers
     global valid_move
     j = 0
     for i in range (4):
-        if game_area[i][j+1]!= 0 or game_area[i][j+2]!= 0 or game_area[i][j+3]!= 0:
-            if game_area[i][j]== 0:
-                while game_area[i][j]==0:
-                    game_area[i][j] = game_area[i][j+1]
-                    game_area[i][j+1] = game_area[i][j+2]
-                    game_area[i][j+2] = game_area[i][j+3]
-                    game_area[i][j+3] = 0
+        if list_of_numbers[i][j+1]!= 0 or list_of_numbers[i][j+2]!= 0 or list_of_numbers[i][j+3]!= 0:
+            if list_of_numbers[i][j]== 0:
+                while list_of_numbers[i][j]==0:
+                    list_of_numbers[i][j] = list_of_numbers[i][j+1]
+                    list_of_numbers[i][j+1] = list_of_numbers[i][j+2]
+                    list_of_numbers[i][j+2] = list_of_numbers[i][j+3]
+                    list_of_numbers[i][j+3] = 0
                 valid_move[0] = 1
-            if game_area[i][j+1]== 0 and (game_area[i][j+2]!= 0 or game_area[i][j+3]!= 0):
-                while game_area[i][j+1]== 0:
-                    game_area[i][j+1] = game_area[i][j+2]
-                    game_area[i][j+2] = game_area[i][j+3]
-                    game_area[i][j+3] = 0
+            if list_of_numbers[i][j+1]== 0 and (list_of_numbers[i][j+2]!= 0 or list_of_numbers[i][j+3]!= 0):
+                while list_of_numbers[i][j+1]== 0:
+                    list_of_numbers[i][j+1] = list_of_numbers[i][j+2]
+                    list_of_numbers[i][j+2] = list_of_numbers[i][j+3]
+                    list_of_numbers[i][j+3] = 0
                 valid_move[0] = 1
-            if game_area[i][j+2]== 0 and game_area[i][j+3]!=0:
-                game_area[i][j+2]= game_area[i][j+3]
-                game_area[i][j+3]= 0
+            if list_of_numbers[i][j+2]== 0 and list_of_numbers[i][j+3]!=0:
+                list_of_numbers[i][j+2]= list_of_numbers[i][j+3]
+                list_of_numbers[i][j+3]= 0
                 valid_move[0] = 1
 
 def move_right(): #movement after right arrow key, find the rest of the explanation at def move_up function with the obvious differences
-    global game_area
+    global list_of_numbers
     global valid_move
     j = 3
     for i in range (4):
-        if game_area[i][j-1]!= 0 or game_area[i][j-2]!= 0 or game_area[i][j-3]!= 0:
-            if game_area[i][j]== 0:
-                while game_area[i][j]==0:
-                    game_area[i][j] = game_area[i][j-1]
-                    game_area[i][j-1] = game_area[i][j-2]
-                    game_area[i][j-2] = game_area[i][j-3]
-                    game_area[i][j-3] = 0
+        if list_of_numbers[i][j-1]!= 0 or list_of_numbers[i][j-2]!= 0 or list_of_numbers[i][j-3]!= 0:
+            if list_of_numbers[i][j]== 0:
+                while list_of_numbers[i][j]==0:
+                    list_of_numbers[i][j] = list_of_numbers[i][j-1]
+                    list_of_numbers[i][j-1] = list_of_numbers[i][j-2]
+                    list_of_numbers[i][j-2] = list_of_numbers[i][j-3]
+                    list_of_numbers[i][j-3] = 0
                 valid_move[3] = 1
-            if game_area[i][j-1]== 0 and (game_area[i][j-2]!= 0 or game_area[i][j-3]!= 0):
-                while game_area[i][j-1]== 0:
-                    game_area[i][j-1] = game_area[i][j-2]
-                    game_area[i][j-2] = game_area[i][j-3]
-                    game_area[i][j-3] = 0
+            if list_of_numbers[i][j-1]== 0 and (list_of_numbers[i][j-2]!= 0 or list_of_numbers[i][j-3]!= 0):
+                while list_of_numbers[i][j-1]== 0:
+                    list_of_numbers[i][j-1] = list_of_numbers[i][j-2]
+                    list_of_numbers[i][j-2] = list_of_numbers[i][j-3]
+                    list_of_numbers[i][j-3] = 0
                 valid_move[3] = 1
-            if game_area[i][j-2]== 0 and game_area[i][j-3]!=0:
-                game_area[i][j-2]= game_area[i][j-3]
-                game_area[i][j-3]= 0
+            if list_of_numbers[i][j-2]== 0 and list_of_numbers[i][j-3]!=0:
+                list_of_numbers[i][j-2]= list_of_numbers[i][j-3]
+                list_of_numbers[i][j-3]= 0
                 valid_move[3] = 1
 
 
 def spawn(): #function responsible for spawning new numbers after valid moves
-    global game_area
+    global list_of_numbers
     x = random.randint(0,3) #generates where the new number will spawn
     y = random.randint(0,3) #generates where the new number will spawn
     chance = random.uniform(0,1) #responsible for generating number 4 to spawn
@@ -163,8 +163,8 @@ def spawn(): #function responsible for spawning new numbers after valid moves
         spawn_num = 4
     else: # 90% of the time number 2 will spawn
         spawn_num = 2
-    if game_area[x][y] == 0: #checks if the generated location is empty
-        game_area[x][y] = spawn_num
+    if list_of_numbers[x][y] == 0: #checks if the generated location is empty
+        list_of_numbers[x][y] = spawn_num
     else: # if it's not empty the function calls itself again, thus running until an empty location is found
         spawn()
 
@@ -212,7 +212,7 @@ def main(scr):
         #this part is responsible for printing the numbers from the 2D list to the screen
         for i in range (4):
             for j in range (4):
-                numbers = str(game_area[i][j]) #needed to convert int into string so the addstr can print it into the screen
+                numbers = str(list_of_numbers[i][j]) #needed to convert int into string so the addstr can print it into the screen
                 screen.addstr((i+1)*4, (j+1)*15, numbers)
 
         #this part is responsible for handling the input and calling the right functions
@@ -220,7 +220,7 @@ def main(scr):
         if event == ord("q"): #key command to exit
             break
         elif event ==ord("w"): #for the demo, to show the part if the player succedd to create a 2048 tile
-            game_area[0][0] = 2048
+            list_of_numbers[0][0] = 2048
         elif event == curses.KEY_UP:
             valid_move[1] = 0 #tells the program that the particular key was pressed down
             move_up() #responsible for deleting zeros among the other numbers
@@ -260,7 +260,7 @@ def main(scr):
         #checks if a 2048 "tile" exists, and count how many non-zero numbers are in the list
         for i in range (4):
             for j in range (4):
-                if game_area[i][j] == 2048: #if 2048 exists in the list, runs the victory sequence
+                if list_of_numbers[i][j] == 2048: #if 2048 exists in the list, runs the victory sequence
                     screen.clear()
                     victory = "Congratulations! You beat the game! :)"
                     screen.addstr(curses.LINES // 2, (curses.COLS - len(victory)) // 2, victory)
@@ -274,7 +274,7 @@ def main(scr):
                         exit()
 
 
-                if game_area[i][j] != 0:
+                if list_of_numbers[i][j] != 0:
                     count_of_non_zeros+=1
 
 
@@ -293,7 +293,7 @@ def main(scr):
 
         screen.refresh()
 
-game_area = [[0 for i in range(4)] for j in range (4)] #generates a 4*4 two-dimensional list and fills it up with zeros, this list is responsible for storing numbers
+list_of_numbers = [[0 for i in range(4)] for j in range (4)] #generates a 4*4 two-dimensional list and fills it up with zeros, this list is responsible for storing numbers
 valid_move = [1 for i in range(4)] #generates a 4 long list filled up with 1s, this list is responsible for keeping track is a valid move was made.
 #0th eleement is for Left, 1st is for Up, 2nd is for Down, 3rd is for Right.
 score = 0 #sets the score zero at the beginning of the game.
