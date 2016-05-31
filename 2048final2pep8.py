@@ -186,6 +186,15 @@ def spawn():  # function responsible for spawning new numbers after valid moves
         spawn()
 
 
+def show_numbers(screen):
+    global list_of_numbers
+    for i in range(4):
+        for j in range(4):
+            numbers = str(list_of_numbers[i][j])  # needed to convert int into string
+            # so the addstr can print it into the screen
+            screen.addstr((i+1)*4, (j+1)*15, numbers)
+
+
 def draw_grid(screen):  # responsible for drawing a grid around the numbers
     screen.hline(2, 12, "_", 53)
     screen.hline(6, 11, "_", 54)
@@ -224,11 +233,7 @@ def main(scr):
         draw_grid(screen)
 
         # this part is responsible for printing the numbers from the 2D list to the screen
-        for i in range(4):
-            for j in range(4):
-                numbers = str(list_of_numbers[i][j])  # needed to convert int into string
-                # so the addstr can print it into the screen
-                screen.addstr((i+1)*4, (j+1)*15, numbers)
+        show_numbers(screen)
 
         # this part is responsible for handling the input and calling the right functions
         event = screen.getch()
@@ -267,12 +272,14 @@ def main(scr):
             move_left()
             if valid_move[0] == 1:
                 spawn()
-
+        show_numbers(screen)
         count_of_non_zeros = 0
         # checks if a 2048 "tile" exists, and count how many non-zero numbers are in the list
         for i in range(4):
             for j in range(4):
                 if list_of_numbers[i][j] == 2048:  # if 2048 exists in the list, runs the victory sequence
+                    screen.refresh()
+                    time.sleep(3)
                     screen.clear()
                     victory = "Congratulations! You beat the game! :)"
                     screen.addstr(curses.LINES // 2, (curses.COLS - len(victory)) // 2, victory)
