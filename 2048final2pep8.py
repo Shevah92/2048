@@ -200,6 +200,9 @@ def color_numbers(screen, i, j, numbers):
     if list_of_numbers[i][j] == 2:
         curses.init_pair(1, curses.COLOR_YELLOW, curses.COLOR_BLACK)
         screen.addstr((i+1)*4, (j+1)*15, numbers, curses.color_pair(1))
+    elif list_of_numbers[i][j] == 4:
+        curses.init_pair(2, curses.COLOR_RED, curses.COLOR_BLACK)
+        screen.addstr((i+1)*4, (j+1)*15, numbers, curses.color_pair(2))
     else:
         screen.addstr((i+1)*4, (j+1)*15, numbers)
 
