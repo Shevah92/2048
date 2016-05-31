@@ -192,7 +192,16 @@ def show_numbers(screen):
         for j in range(4):
             numbers = str(list_of_numbers[i][j])  # needed to convert int into string
             # so the addstr can print it into the screen
-            screen.addstr((i+1)*4, (j+1)*15, numbers)
+            color_numbers(screen, i, j, numbers)
+
+
+def color_numbers(screen, i, j, numbers):
+    global list_of_numbers
+    if list_of_numbers[i][j] == 2:
+        curses.init_pair(1, curses.COLOR_YELLOW, curses.COLOR_BLACK)
+        screen.addstr((i+1)*4, (j+1)*15, numbers, curses.color_pair(1))
+    else:
+        screen.addstr((i+1)*4, (j+1)*15, numbers)
 
 
 def draw_grid(screen):  # responsible for drawing a grid around the numbers
@@ -211,6 +220,7 @@ def draw_grid(screen):  # responsible for drawing a grid around the numbers
 def main(scr):
     # the usual curses initialization of curses
     screen = curses.initscr()
+    curses.start_color()
     curses.noecho()
     curses.curs_set(0)
     screen.keypad(1)
@@ -273,6 +283,7 @@ def main(scr):
             if valid_move[0] == 1:
                 spawn()
         show_numbers(screen)
+        screen.refresh()
         count_of_non_zeros = 0
         # checks if a 2048 "tile" exists, and count how many non-zero numbers are in the list
         for i in range(4):
