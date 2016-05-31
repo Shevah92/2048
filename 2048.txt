@@ -3,5 +3,13 @@ creating a 4x4 array:
 z= 4
 game_area = [[0 for x in range(z)} for y in range (z)]
 
-pap�rrol cuccok, valid�lni a movementet, kell-e a while a mozgatashoz? (D�ri�ban)
+papírrol cuccok, validálni a movementet, kell-e a while a mozgatashoz? (Dóriéban)
+
+valid move: ha történt szám (nem 0) mozgása, vagy volt összeadás, tehát ekkor küldjön
+
+valid_move legyen egy 4 elemes globális lista, elejen 2-esekkel feltöltve 
+első elem bal, második elem fel, harmadik elem le, negyedik elem jobb
+nyil eseten hozza tartozo lista elemet 0-azza, ha volt jó mozgatás/összeadás, 1-est küld a megfelelő helyre
+
+kilép ha van 2048-as tile vagy tetszöleges gomb imput vagy (ha nincs 0 a mezőn és valid_move lista minden eleme 0) 
 
