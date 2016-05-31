@@ -215,8 +215,18 @@ def color_numbers(screen, i, j, numbers):
     elif list_of_numbers[i][j] == 64:
         curses.init_pair(6, curses.COLOR_MAGENTA, curses.COLOR_BLACK)
         screen.addstr((i+1)*4, (j+1)*15, numbers, curses.color_pair(6))
-    else:
+    elif list_of_numbers[i][j] == 128:
         screen.addstr((i+1)*4, (j+1)*15, numbers)
+    elif list_of_numbers[i][j] == 256:
+        screen.addstr((i+1)*4, (j+1)*15, numbers, curses.color_pair(1))
+    elif list_of_numbers[i][j] == 512:
+        screen.addstr((i+1)*4, (j+1)*15, numbers, curses.color_pair(2))
+    elif list_of_numbers[i][j] == 1024:
+        screen.addstr((i+1)*4, (j+1)*15, numbers, curses.color_pair(3))
+    elif list_of_numbers[i][j] == 2048:
+        screen.addstr((i+1)*4, (j+1)*15, numbers, curses.color_pair(4))
+    else:
+        screen.addstr((i+1)*4, (j+1)*15, numbers)  # zeros are white
 
 
 def draw_grid(screen):  # responsible for drawing a grid around the numbers
