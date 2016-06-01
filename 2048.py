@@ -265,13 +265,31 @@ def export_scores(screen, score):
     curses.echo()
     input_name = screen.getstr(curses.LINES // 2 + 1, curses.COLS // 2)
     input_name = str(input_name, "utf-8")
-    for i in range(len(score_list)):
-        if int(score) > int(score_list[0]):
+    if len(score_list) == 0:
+        score_list.append(score)
+        name_list.append(input_name)
+    elif len(score_list) == 1:
+        if int(score_list[0]) <= score:
             score_list.insert(0, score)
             name_list.insert(0, input_name)
-        elif int(score_list[i]) > int(score) and int(score) >= int(score_list[i+1]):
-            score_list.insert(i, score)
-            name_list.insert(i, input_name)
+        else:
+            score_list.append(score)
+            name_list.append(input_name)
+    else:
+        i = 0
+        for i in range(len(score_list)):
+            if int(score) > int(score_list[0]):
+                score_list.insert(0, score)
+                name_list.insert(0, input_name)
+                break
+            elif int(score_list[i]) >= int(score) and int(score) > int(score_list[i+1]):
+                score_list.insert(i + 1, score)
+                name_list.insert(i + 1, input_name)
+                break
+            else:
+                score_list.append(score)
+                name_list.append(input_name)
+                break
     with open("highscores.csv", 'w', newline='') as outfile:
         writer = csv.writer(outfile, delimiter=',')
         for i in range(len(score_list)):
