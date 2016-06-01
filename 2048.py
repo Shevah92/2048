@@ -198,6 +198,7 @@ def show_numbers(screen):
 
 def color_numbers(screen, i, j, numbers):
     global list_of_numbers
+    curses.init_pair(4, curses.COLOR_BLUE, curses.COLOR_BLACK)
     if list_of_numbers[i][j] == 2:
         curses.init_pair(1, curses.COLOR_YELLOW, curses.COLOR_BLACK)
         screen.addstr((i+1)*4, (j+1)*15, numbers, curses.color_pair(1))
@@ -243,12 +244,39 @@ def draw_grid(screen):  # responsible for drawing a grid around the numbers
     screen.vline(3, 65, "|", 16)
 
 
-def export_scores(screen):
+def import_scores():
+    global score_list
+    global name_list
+    with open("highscores.csv") as infile:
+        readCSV = csv.reader(infile, delimiter=',')
+        for row in readCSV:  # creates two lists, one for keys and one for values
+            name_in_file = row[0]
+            score_in_file = row[1]
+            score_list.append(score_in_file)
+            name_list.append(name_in_file)
+
+
+def export_scores(screen, score):
     screen.clear()
-    name = "Enter your name: \n"
+    global score_list
+    global name_list
+    name = "Enter your name:"
     screen.addstr(curses.LINES // 2, (curses.COLS - len(name)) // 2, name)
     curses.echo()
     input_name = screen.getstr(curses.LINES // 2 + 1, curses.COLS // 2)
+    input_name = str(input_name, "utf-8")
+    for i in range(len(score_list)):
+        if int(score) > int(score_list[0]):
+            score_list.insert(0, score)
+            name_list.insert(0, input_name)
+        elif int(score_list[i]) > int(score) and int(score) >= int(score_list[i+1]):
+            score_list.insert(i, score)
+            name_list.insert(i, input_name)
+    with open("highscores.csv", 'w', newline='') as outfile:
+        writer = csv.writer(outfile, delimiter=',')
+        for i in range(len(score_list)):
+            outlist = [name_list[i], score_list[i]]
+            writer.writerow(outlist)
 
 
 def main(scr):
@@ -258,10 +286,8 @@ def main(scr):
     curses.noecho()
     curses.curs_set(0)
     screen.keypad(1)
-    #high_scores = import_scores()
-
-
-    # we run spawn twice when the game start so 2 numbers will be placed in the grid, just liek in the original game
+    import_scores()
+    # we run spawn twice when the game start so 2 numbers will be placed in the grid, just like in the original game
     spawn()
     spawn()
 
@@ -334,7 +360,7 @@ def main(scr):
                     screen.addstr((curses.LINES // 2)+2, (curses.COLS - len(show_score)) // 2, show_score)
                     screen.refresh()
                     time.sleep(3)
-                    export_scores(screen)
+                    export_scores(screen, score)
                     try:
                         curses.endwin(screen)
                     except TypeError:
@@ -351,11 +377,12 @@ def main(scr):
                 screen.addstr((curses.LINES // 2)+2, (curses.COLS - len(show_score)) // 2, show_score)
                 screen.refresh()
                 time.sleep(3)
-                export_scores(screen)
+                export_scores(screen, score)
                 break
 
         screen.refresh()
-
+score_list = []
+name_list = []
 list_of_numbers = [[0 for i in range(4)] for j in range(4)]  # generates a 4*4 two-dimensional list and
 # fills it up with zeros, this list is responsible for storing numbers
 valid_move = [1 for i in range(4)]  # generates a 4 long list filled up with 1s,
