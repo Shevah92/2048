@@ -286,7 +286,7 @@ def export_scores(screen, score):
                 score_list.insert(i + 1, score)
                 name_list.insert(i + 1, input_name)
                 break
-            else:
+            elif int(score_list[len(score_list) - 1]) >= int(score):
                 score_list.append(score)
                 name_list.append(input_name)
                 break
@@ -295,10 +295,29 @@ def export_scores(screen, score):
         for i in range(len(score_list)):
             outlist = [name_list[i], score_list[i]]
             writer.writerow(outlist)
+    show_highscores(screen)
+
+
+def show_highscores(screen):
+    screen.clear()
+    global score_list
+    global name_list
+    highscore = "Highscores:"
+    screen.addstr(1, (curses.COLS - len(highscore)) // 2, highscore)
+    if len(score_list) <= 10:
+        for i in range(len(score_list)):
+            screen.addstr(i * 2 + 3, curses.COLS // 2 - len(name_list[i]), name_list[i])
+            screen.addstr(i * 2 + 3, curses.COLS // 2 + 1, str(score_list[i]))
+    else:
+        for i in range(10):
+            screen.addstr(i * 2 + 3, curses.COLS // 2 - len(name_list[i]), name_list[i])
+            screen.addstr(i * 2 + 3, curses.COLS // 2 + 1, str(score_list[i]))
+    screen.refresh()
+    time.sleep(5)
 
 
 def main(scr):
-    # the usual curses initialization of curses
+    # the usual curses initialization
     screen = curses.initscr()
     curses.start_color()
     curses.noecho()
