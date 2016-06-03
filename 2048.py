@@ -196,7 +196,7 @@ def show_numbers(screen):
             color_numbers(screen, i, j, numbers)
 
 
-def color_numbers(screen, i, j, numbers):
+def color_numbers(screen, i, j, numbers):  # responsible for the different colors of numbers
     global list_of_numbers
     curses.init_pair(4, curses.COLOR_BLUE, curses.COLOR_BLACK)
     if list_of_numbers[i][j] == 2:
@@ -244,7 +244,7 @@ def draw_grid(screen):  # responsible for drawing a grid around the numbers
     screen.vline(3, 65, "|", 16)
 
 
-def import_scores():
+def import_scores():  # responsible for importing scores from a csv file
     global score_list
     global name_list
     with open("highscores.csv") as infile:
@@ -256,15 +256,16 @@ def import_scores():
             name_list.append(name_in_file)
 
 
-def export_scores(screen, score):
+def export_scores(screen, score):  # responsible for exporting the scores
     screen.clear()
     global score_list
     global name_list
     name = "Enter your name:"
     screen.addstr(curses.LINES // 2, (curses.COLS - len(name)) // 2, name)
     curses.echo()
-    input_name = screen.getstr(curses.LINES // 2 + 1, curses.COLS // 2)
-    input_name = str(input_name, "utf-8")
+    input_name = screen.getstr(curses.LINES // 2 + 1, curses.COLS // 2)  # handles user input
+    input_name = str(input_name, "utf-8")  # converts bytes to string format
+    # this long part is responsible for inserting names and scores into the correct place
     if len(score_list) == 0:
         score_list.append(score)
         name_list.append(input_name)
@@ -290,7 +291,7 @@ def export_scores(screen, score):
                 score_list.append(score)
                 name_list.append(input_name)
                 break
-    with open("highscores.csv", 'w', newline='') as outfile:
+    with open("highscores.csv", 'w', newline='') as outfile:  # actual exporting happens here
         writer = csv.writer(outfile, delimiter=',')
         for i in range(len(score_list)):
             outlist = [name_list[i], score_list[i]]
@@ -298,18 +299,18 @@ def export_scores(screen, score):
     show_highscores(screen)
 
 
-def show_highscores(screen):
+def show_highscores(screen):  # shows the highest scores on the screen after the game is over
     screen.clear()
     global score_list
     global name_list
     highscore = "Highscores:"
     screen.addstr(1, (curses.COLS - len(highscore)) // 2, highscore)
-    if len(score_list) <= 10:
+    if len(score_list) <= 10:  # shows every highscore if there are less then 10
         for i in range(len(score_list)):
             screen.addstr(i * 2 + 3, curses.COLS // 2 - len(name_list[i]), name_list[i])
             screen.addstr(i * 2 + 3, curses.COLS // 2 + 1, str(score_list[i]))
     else:
-        for i in range(10):
+        for i in range(10):  # shows the 10 highest scores
             screen.addstr(i * 2 + 3, curses.COLS // 2 - len(name_list[i]), name_list[i])
             screen.addstr(i * 2 + 3, curses.COLS // 2 + 1, str(score_list[i]))
     screen.refresh()
@@ -323,7 +324,7 @@ def main(scr):
     curses.noecho()
     curses.curs_set(0)
     screen.keypad(1)
-    import_scores()
+    import_scores()  # importing scores from a csv file
     # we run spawn twice when the game start so 2 numbers will be placed in the grid, just like in the original game
     spawn()
     spawn()
@@ -397,7 +398,7 @@ def main(scr):
                     screen.addstr((curses.LINES // 2)+2, (curses.COLS - len(show_score)) // 2, show_score)
                     screen.refresh()
                     time.sleep(3)
-                    export_scores(screen, score)
+                    export_scores(screen, score)  # export scores to a csv file
                     try:
                         curses.endwin(screen)
                     except TypeError:
@@ -414,7 +415,7 @@ def main(scr):
                 screen.addstr((curses.LINES // 2)+2, (curses.COLS - len(show_score)) // 2, show_score)
                 screen.refresh()
                 time.sleep(3)
-                export_scores(screen, score)
+                export_scores(screen, score)  # export scores to a csv file
                 break
 
         screen.refresh()
